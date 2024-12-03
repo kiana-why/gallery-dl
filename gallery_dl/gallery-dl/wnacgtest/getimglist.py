@@ -21,14 +21,14 @@ def fetch_image_list(aid, proxies=None):
 
         if match:
             imglist_content = match.group(1)
-            url_pattern = r'url:\s*fast_img_host\+\\"([^\"]+)\\"'
-            # url_pattern = r'data(.*?\.webp)'
+            # url_pattern = r'url:\s*fast_img_host\+\\"([^\"]+)\\"'
+            url_pattern = r'data(.*?)\\"'
             img_urls = re.findall(url_pattern, imglist_content)
 
             # Construct the full URLs
-            fast_img_host = "https:"  # Assuming `fast_img_host` is `https:` as inferred from the content
-            img_list = [fast_img_host + url for url in img_urls]
-            img_list.pop()
+            # fast_img_host = "https:"  # Assuming `fast_img_host` is `https:` as inferred from the content
+            img_list = [url for url in img_urls]
+            # img_list.pop()
 
             # Save to JSON file
             json_file = f"{aid}.json"
