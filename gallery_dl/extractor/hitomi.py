@@ -55,12 +55,26 @@ class HitomiGalleryExtractor(GalleryExtractor):
                 tag += " ♂"
             tags.append(tag)
 
+
+        #why-version list languages
+        languages =  {}
+        if iget("languages"):
+            for laninfo in iget("languages") or ():
+                galleryid = string.capwords(str(laninfo["galleryid"]))
+                lanlocal = string.capwords(laninfo["name"])
+                languages[lanlocal] = galleryid
+
+
+        else:
+            languages[None] = "None"
+
         return {
             "gallery_id": text.parse_int(info["id"]),
             "title"     : info["title"],
             "title_jpn" : info.get("japanese_title") or "",
             "type"      : info["type"].capitalize(),
             "language"  : language,
+            "languages" : languages,
             "lang"      : util.language_to_code(language),
             "date"      : text.parse_datetime(date, "%Y-%m-%d %H:%M:%S%z"),
             "tags"      : tags,
